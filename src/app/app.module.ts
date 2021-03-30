@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DecodeHtmlEntitiesModule } from 'decode-html-entities';
 import { QuizCanDeactivateGuardService } from './shared/services/quiz-can-deactivate-guard.service';
-import { FooterComponent } from './pages/footer/footer.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
