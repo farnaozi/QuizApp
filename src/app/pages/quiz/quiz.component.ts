@@ -13,6 +13,7 @@ export class QuizComponent implements OnInit {
   _answers: boolean[] = [];
   _questionNumber: number = 1;
   _answer: string | undefined;
+  _response_code: number | undefined;
   @HostListener('window:beforeunload',['$event'])
 
   showMessage($event: { returnValue: string; }) {
@@ -23,7 +24,6 @@ export class QuizComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private _quizService: QuizService,
     private _router: Router) { 
-
     }
 
   ngOnInit(): void {
@@ -36,6 +36,7 @@ export class QuizComponent implements OnInit {
       }
       else
         this._route.data.subscribe(res => {
+          this._response_code = res.quiz.response_code;
           this._answers = [res.quiz.results.length];
           this.LoadData(res.quiz.results);
         });
@@ -48,26 +49,22 @@ export class QuizComponent implements OnInit {
       this._answers[this._questionNumber - 1] = true;
     else
       this._answers[this._questionNumber - 1] = false;
-
     this._answer = undefined;
 
     if(this._quetsions.length != this._questionNumber)
       this._questionNumber += 1;
-    else{
+    else
       this._questionNumber = 0;
-    }
   }
 
   TryAgain(){
     this._route.queryParams.subscribe(params=>{
-      console.log( params['amount'])
       this._quizService.GetQuizQuestions(
         params['amount'],
         params['category'],
         params['difficulty']
       ).subscribe((data:any) => {
         this.LoadData(data.results);
-
       })
     })
 
@@ -77,6 +74,8 @@ export class QuizComponent implements OnInit {
     this._answers = []
     this._quetsions = []
     this._questionNumber = 1;
+    if(this._response_code == 1)
+      this._questionNumber = 0;
     data.forEach((element: any) => {
       let txt = document.createElement("textarea");
       txt.innerHTML = element.question;

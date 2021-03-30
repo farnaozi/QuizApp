@@ -1,4 +1,11 @@
-<ng-template [ngIf]="_quetsions.length == 0">
+<ng-template [ngIf]="_response_code == 1">
+    <div class="alert alert-warning" role="alert">
+        Sorry, We didn't find any test for you!
+    </div>
+
+    <button routerLink="" class="btn btn-outline-secondary">Go Back</button>
+</ng-template>
+<ng-template [ngIf]="_quetsions.length == 0 && _response_code == undefined">
     <div class="spinner-grow">
 
     </div>
@@ -29,6 +36,8 @@
                             <button [disabled]="!frm.valid" type="submit" class="btn btn-outline-secondary">
                                 {{_questionNumber == _quetsions.length ? 'Finish' : 'Next'}}
                             </button>
+                            <button routerLink="" type="button" class="btn btn-outline-secondary float-right">Stop the
+                                Quiz</button>
                         </div>
                     </ng-template>
 
