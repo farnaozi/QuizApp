@@ -1,0 +1,56 @@
+<ng-template [ngIf]="_quetsions.length == 0">
+    <div class="spinner-grow">
+
+    </div>
+</ng-template>
+<div class="container">
+    <div class="row">
+        <div class="col-8 quiz-form">
+            <form *ngIf="_quetsions.length != 0" #frm="ngForm" (submit)="next()">
+                <div class="card border-dark">
+                    <div class="card-header text-center">
+                        Quiz
+                    </div>
+                    <ng-template [ngIf]="_questionNumber != 0">
+                        <div class="card-body">
+                            <h5 class="card-title">Question {{'N' + _questionNumber}}</h5>
+                            <p class="card-text">{{_quetsions[_questionNumber-1].question}}</p>
+                            <div *ngFor="let answer of _quetsions[_questionNumber-1].answers; let i=index"
+                                class="form-check">
+                                <input [value]="answer" [(ngModel)]="_answer" class="form-check-input" type="radio"
+                                    name="answer" [id]="i" required>
+                                <label class="form-check-label" [for]="i">
+                                    {{answer}}
+                                </label>
+                            </div>
+                            <!-- {{_quetsions[_questionNumber-1].correct_answer}} -->
+                        </div>
+                        <div class="card-footer">
+                            <button [disabled]="!frm.valid" type="submit" class="btn btn-outline-secondary">
+                                {{_questionNumber == _quetsions.length ? 'Finish' : 'Next'}}
+                            </button>
+                        </div>
+                    </ng-template>
+
+                    <ng-template [ngIf]="_questionNumber == 0">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Your Score: {{(GetCorrectAnswersCount()/_quetsions.length)*100 |
+                                number : '1.2-2'}}%</h5>
+                            <p class="card-text">
+                                {{GetCorrectAnswersCount()}}/{{_quetsions.length}}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <button routerLink="" type="button" class="btn btn-outline-secondary btn-block">
+                                New Quiz
+                            </button>
+                            <button (click)="TryAgain()" type="button" class="btn btn-outline-secondary btn-block">
+                                Try again
+                            </button>
+                        </div>
+                    </ng-template>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 quiz-form">
+            <form #frm="ngForm" (submit)="StartTheQuiz()">
+                <div class="card border-dark">
+                    <div class="card-header text-center">
+                        Quiz Settings
+                    </div>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Special title treatment</h5> -->
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input required (keyup)="CheckValidity()" min="1" max="50" [(ngModel)]="_quizForm.amount" type="number" class="form-control" name="amount" id="amount">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select class="form-control" [(ngModel)]="_quizForm.category" name="category" id="category" required>
+                                <option selected disabled [ngValue]="null">--select category--</option>
+                                <option *ngFor="let category of _categories" [ngValue]="category.id" >{{category.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty</label>
+                            <select class="form-control" [(ngModel)]="_quizForm.difficulty" name="difficulty" id="difficulty" required>
+                                <option selected disabled [ngValue]="null">--select difficulty--</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <button [disabled]="!frm.valid" type="submit" class="btn btn-outline-secondary btn-block">Start the Quiz</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
